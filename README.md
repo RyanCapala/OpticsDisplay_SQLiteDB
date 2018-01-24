@@ -1,12 +1,12 @@
 # OpticsDisplay_SQLiteDB
 
-In this project, I had to build an application for Android device utilizing the built in SQLiteOpenhelper for Android. This application will store the display eyewear, and the users in different SQLite Database.
+In this project, I had to build an application for Android device utilizing the built in SQLiteOpenhelper for Android. This application will store the display eyewear inventory, and the users in different SQLite Database.
 
 Motivation of this project:
-This project was an Idea of mine while working at a sunglass store called Oakley Vault. I was an optics specialist that is incharge of all the stock and display eyewear. The display eyewears does not have an easily accessible inventory guidelines. If the displays are missing, I have to go through hundreds of empty display boxes to find which ones are missing. That is when this project came to mind.
+This project was an Idea of mine while working at a sunglass store called Oakley Vault. I was an optics specialist that is in-charge of all the stock and display eyewear. The display eyewear does not have an easily accessible inventory guidelines. If the displays are missing, I have to go through hundreds of empty display boxes to find which ones are missing. That is when this project came to mind.
 
 Features:
-- This application will list all eyewears in each display case.
+- This application will list all eyewear in each display case.
 - The user will be able to edit each eyewear.
 - It will also show the total count in each display case.
 - The application will have a search capability for user convenience.
