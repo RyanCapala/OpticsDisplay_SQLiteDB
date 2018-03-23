@@ -29,7 +29,6 @@ import com.example.awesome.opticsdisplay.Util.Session;
 import java.util.ArrayList;
 import java.util.List;
 
-//File test for github in Android Studio
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
