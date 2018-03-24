@@ -12,15 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.awesome.opticsdisplay.Data.DatabaseHandler;
 import com.example.awesome.opticsdisplay.Model.Display;
 import com.example.awesome.opticsdisplay.R;
 import com.example.awesome.opticsdisplay.UI.RecyclerViewAdapter;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +118,18 @@ public class LocationActivity extends AppCompatActivity implements SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(this);
 
+        //--- To change the cursor color of the search menu ---//
+        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById
+                (android.support.v7.appcompat.R.id.search_src_text);
+        try {
+            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            mCursorDrawableRes.setAccessible(true);
+            mCursorDrawableRes.set(searchTextView, R.drawable.cursor_color);
+        } catch (Exception e) {
+
+        }
+        //------------------------------------------------------//
+
         return true;
     }
 
@@ -143,8 +156,8 @@ public class LocationActivity extends AppCompatActivity implements SearchView
                 newList.add(d);
         }
         recyclerViewAdapter.setFilter(newList);
-        Toast.makeText(this, "Found " + newList.size() + " items",
-                Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Found " + newList.size() + " items",
+        //        Toast.LENGTH_LONG).show();
         return true;
     }
 

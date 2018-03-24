@@ -19,7 +19,9 @@
             app:titleTextColor="@android:color/black"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorAccent"
-            android:theme="@style/AppTheme.PopupOverlay">
+            android:theme="@style/SearchViewStyle">
+            <!--android:theme="@style/AppTheme.PopupOverlay"-->
+
 
         </android.support.v7.widget.Toolbar>
 
