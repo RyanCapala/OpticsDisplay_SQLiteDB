@@ -20,6 +20,10 @@ public class Constants {
     public static final String KEY_OLD_LOCATION = "old_location";
     public static final String KEY_DATE_ADDED = "date_added";
 
+    public static final String MISSING_STR = "** MISSING **";
+    public static final String SOLD_STR = "** SOLD **";
+    public static final String NOT_APPLICABLE = "N/A";
+
 
     //String Array
     public static final String[] QUERY_STRING_ARRAY =
@@ -29,6 +33,7 @@ public class Constants {
                     KEY_DESCRIPTION,
                     KEY_MODEL_NUMBER,
                     KEY_LOCATION,
+                    KEY_OLD_LOCATION,
                     KEY_SHELF_LOCTION,
                     KEY_DATE_ADDED
             };

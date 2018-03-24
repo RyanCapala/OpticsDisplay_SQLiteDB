@@ -126,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     clearInputEditText();
                     
                 } else {
-                    Snackbar.make(scrollView, "Password doesnt match!", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(scrollView, R.string.error_password_match, Snackbar.LENGTH_LONG).show();
                     clearPasswordEditText();
                 }
 

@@ -43,7 +43,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
                         android:padding="5dp"
                         android:text="0"
@@ -51,9 +50,27 @@
                         android:textColor="@android:color/black"
                         android:textSize="24sp"
                         android:textStyle="italic|bold"
+                        app:layout_constraintLeft_toRightOf="@+id/colonTV"
                         app:layout_constraintBottom_toBottomOf="@+id/location_title_cont_loc"
-                        app:layout_constraintStart_toEndOf="@+id/location_title_cont_loc"
-                        app:layout_constraintTop_toTopOf="@+id/location_title_cont_loc" />
+                        app:layout_constraintTop_toTopOf="@+id/location_title_cont_loc"
+                        tools:layout_editor_absoluteX="266dp" />
+
+                    <TextView
+                        android:id="@+id/colonTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:padding="5dp"
+                        android:text=" : "
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toRightOf="@+id/location_title_cont_loc"
+                        app:layout_constraintBottom_toBottomOf="@id/location_title_cont_loc"
+                        app:layout_constraintTop_toTopOf="@id/location_title_cont_loc"
+                        app:layout_constraintVertical_bias="1.0"
+                        tools:layout_editor_absoluteX="230dp" />
 
 
                 </android.support.constraint.ConstraintLayout>

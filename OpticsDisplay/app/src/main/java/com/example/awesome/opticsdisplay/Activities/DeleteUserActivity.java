@@ -59,7 +59,6 @@ public class DeleteUserActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String user = (String) userListView.getItemAtPosition(position);
-                //Toast.makeText(DeleteUserActivity.this, user, Toast.LENGTH_LONG).show();
                 showDeleteDialog(user, position);
             }
         });
@@ -90,7 +89,9 @@ public class DeleteUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Delete user
-                Toast.makeText(DeleteUserActivity.this, "User Deleted: "+ user, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeleteUserActivity.this, R.string.user_deleted +": " + user, Toast
+                        .LENGTH_SHORT)
+                        .show();
                 databaseHelperUser.deleteUser(user);
                 userArray.remove(pos);
                 dialog.dismiss();

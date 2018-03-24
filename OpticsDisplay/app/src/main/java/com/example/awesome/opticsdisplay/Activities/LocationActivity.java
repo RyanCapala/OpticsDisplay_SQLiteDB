@@ -64,7 +64,6 @@ public class LocationActivity extends AppCompatActivity implements SearchView
         intent = getIntent();
         passed_location = intent.getStringExtra(INTENT_KEY);
 
-        Toast.makeText(this, passed_location, Toast.LENGTH_LONG).show();
         tv_title.setText(passed_location);
         
         //for count TextView
@@ -93,6 +92,7 @@ public class LocationActivity extends AppCompatActivity implements SearchView
             display.setLocation(d.getLocation());
             display.setShelfLocation(d.getShelfLocation());
             display.setDateItemAdded(d.getDateItemAdded());
+            display.setOldLocation(d.getOldLocation());
 
             itemList.add(display);
         }

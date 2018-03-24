@@ -22,8 +22,7 @@ public class PinActivity extends AppCompatActivity {
     Button registerUserBtn;
     Button deleteUserBtn;
     TextView cancelAdmin;
-    private String mainPin1 = "0911";
-    private String mainPin2 = "7024749000";
+
     private String adminPin, admin_name;
     private DBHandlerAdmin dbHandlerAdmin;
     private List<String> passList;
@@ -61,9 +60,7 @@ public class PinActivity extends AppCompatActivity {
         cancelAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PinActivity.this, StartpageActivity.class);
-                startActivity(intent);
-                finish();
+                goToActivity(StartpageActivity.class);
             }
         });
 

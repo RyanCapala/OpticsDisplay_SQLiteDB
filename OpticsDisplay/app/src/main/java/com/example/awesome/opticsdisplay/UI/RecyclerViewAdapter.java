@@ -13,11 +13,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.awesome.opticsdisplay.Data.DatabaseHandler;
 import com.example.awesome.opticsdisplay.Model.Display;
 import com.example.awesome.opticsdisplay.R;
+import com.example.awesome.opticsdisplay.Util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,10 +174,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     //to set location count in LocationActivity
                     String loc_count = String.valueOf(displayItems.size());
-                    Toast.makeText(context, "TOTAL LOCATION COUNT: " + loc_count, Toast
-                            .LENGTH_LONG)
-                            .show();
-                    
                     updateCountToSharedPref(loc_count);
                     updateLocationCountInterface.updateLocationCount(loc_count);
                     dialog.dismiss();
@@ -273,8 +269,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     display.setModel(itemModel.getText().toString());
                     display.setLocation(loc_item);
                     display.setShelfLocation(shelf_loc_item);
-                    if (!currLoc.equals(loc_item)) {
+                    if (loc_item.equals(Constants.MISSING_STR) || loc_item.equals(Constants
+                            .SOLD_STR)) {
                         display.setOldLocation(currLoc);
+                    } else if (!loc_item.equals(Constants.MISSING_STR) || !loc_item.equals
+                            (Constants.SOLD_STR)) {
+                        display.setOldLocation(Constants.NOT_APPLICABLE);
                     }
 
                     if (!itemName.getText().toString().isEmpty() &&

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.awesome.opticsdisplay.Data.DatabaseHandler;
 import com.example.awesome.opticsdisplay.Model.Display;
 import com.example.awesome.opticsdisplay.R;
+import com.example.awesome.opticsdisplay.Util.Constants;
 import com.example.awesome.opticsdisplay.Util.Session;
 
 import java.util.ArrayList;
@@ -56,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
     private List<String> location_itemList;
     ListAdapter listAdapter;
     
-    private String INTENT_KEY_UNAME = "username";
+    //private String INTENT_KEY_UNAME = "username";
     private TextView usernameTV;
     private String _uname = "";
-    public static final String UNAME_KEY = "userName";
+    //public static final String UNAME_KEY = "userName";
     public static final String PREF_NAME = "Preferences";
     public static final String PREF_KEY = "text";
     
@@ -107,12 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         shelf_location_array = getResources().getStringArray(R.array.shelf_location);
 
-        //---------------- non custom listview -----------------//
-        //ListAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, location_array);
-        //arrayList = new ArrayList<>(Arrays.asList(location_array));
-        //arrayAdapter = new ArrayAdapter<String>(this, R.layout.row_item1, R.id.location_name, arrayList);
-        //location_listView.setAdapter(arrayAdapter);
-        //---------------- non custom listview -----------------//
 
         //----------------- custom listview -----------------//
         getCountInEachLocation();
@@ -198,8 +193,7 @@ public class MainActivity extends AppCompatActivity {
         shelf_location_spinner.setOnItemSelectedListener(new AdapterView
                 .OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position,
-                                       long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 shelf_location_item = shelf_location_array[position];
             }
     
@@ -246,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
         display.setDescription(newDisplay_item_description);
         display.setModel(newDisplay_item_model);
         display.setLocation(location_item);
+        display.setOldLocation(Constants.NOT_APPLICABLE);
         display.setShelfLocation(shelf_location_item);
 
         //save to DB
@@ -285,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 count = String.valueOf(displayList.size());
             }
 
-            String item = location_array[i] + "\nCount: " + count;
+            String item = location_array[i] + "\nCount:\t\t" + count;
             location_itemList.add(item);
 
 
@@ -295,7 +290,8 @@ public class MainActivity extends AppCompatActivity {
     //--------------------------------------------
     
     private String firstLetterToUpper(String str) {
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+        String convertedString = str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+        return convertedString;
     }
     
     //--------------------------------------------
