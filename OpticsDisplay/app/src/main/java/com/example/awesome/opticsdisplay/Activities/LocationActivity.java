@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
@@ -102,9 +101,7 @@ public class LocationActivity extends AppCompatActivity implements SearchView
         recyclerViewAdapter = new RecyclerViewAdapter(this, itemList, this);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.notifyDataSetChanged();
-    
-    
-        Log.d(TAG, "onCreate: called");
+
     }//end onCreate
 
 

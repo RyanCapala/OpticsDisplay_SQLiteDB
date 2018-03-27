@@ -20,6 +20,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.awesome.opticsdisplay.Data.DatabaseHandler;
 import com.example.awesome.opticsdisplay.Model.Display;
@@ -35,15 +36,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     private AppCompatActivity ACTIVITY = MainActivity.this;
 
-    private AlertDialog.Builder dialogBuilder;
-    private AlertDialog dialog;
+    private AlertDialog.Builder dialogBuilder, dialogBuilder2;
+    private AlertDialog dialog, dialog2;
     private EditText item_name;
-    private EditText item_model;
+    private EditText item_model, item_model2;
     private EditText item_description;
-    private Button saveButton;
-    private Button cancelButton;
+    private Button saveButton, searchButton;
+    private Button cancelButton, cancelButton2, clearBtn;
     private Spinner location_spinner, shelf_location_spinner;
-    private DatabaseHandler db;
+    private TextView searchResultTV;
+    private DatabaseHandler db, db2;
 
     //for popup spinner
     private String location_item;
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         
 
         db = new DatabaseHandler(this);
+        db2 = new DatabaseHandler(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -133,6 +136,21 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search_menu_main).getActionView();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        searchView.setOnQueryTextListener(this);
+//        //--- To change the cursor color of the search menu ---//
+//        AutoCompleteTextView searchTextView = (AutoCompleteTextView) searchView.findViewById
+//                (android.support.v7.appcompat.R.id.search_src_text);
+//        try {
+//            Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+//            mCursorDrawableRes.setAccessible(true);
+//            mCursorDrawableRes.set(searchTextView, R.drawable.cursor_color);
+//        } catch (Exception e) {
+//
+//        }
+//        //------------------------------------------------------//
         return true;
     }
 
@@ -152,13 +170,66 @@ public class MainActivity extends AppCompatActivity {
             case R.id.sign_out_menu:
                 logoutUser();
                 break;
+
+            case R.id.search_menu_main:
+                Toast.makeText(this, "Search", Toast.LENGTH_LONG).show();
+                createPopupDialog2();
         }
 
         return super.onOptionsItemSelected(item);
     }
-    
-    
-    
+
+//    @Override
+//    public boolean onQueryTextSubmit(String query) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onQueryTextChange(String newText) {
+//
+//        return false;
+//    }
+
+    private void createPopupDialog2() {
+        dialogBuilder2 = new AlertDialog.Builder(this);
+        View view2 = getLayoutInflater().inflate(R.layout.search_popup, null);
+        item_model2 = (EditText) view2.findViewById(R.id.item_model_search_popup);
+        searchResultTV = (TextView) view2.findViewById(R.id.search_result_TV_popup);
+        searchButton = (Button) view2.findViewById(R.id.search_button_search_popup);
+        cancelButton2 = (Button) view2.findViewById(R.id.cancel_button_search_popup);
+        clearBtn = (Button) view2.findViewById(R.id.clear_search_button);
+
+        dialogBuilder2.setView(view2);
+        dialog2 = dialogBuilder2.create();
+        dialog2.show();
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String modelNumber = item_model2.getText().toString().trim();
+                if (!modelNumber.isEmpty()) {
+                    String foundItem = db2.locationOfItem2(modelNumber);
+                    searchResultTV.setText(foundItem);
+                }
+            }
+        });
+
+        clearBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                item_model2.setText(null);
+                searchResultTV.setText(null);
+            }
+        });
+
+        cancelButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog2.dismiss();
+            }
+        });
+
+    }
 
     //---------- createPopupDialog -------------//
     private void createPopupDialog() {

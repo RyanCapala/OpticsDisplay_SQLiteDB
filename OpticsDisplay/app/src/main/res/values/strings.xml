@@ -86,6 +86,9 @@
     <string name="reset_btn">Reset</string>
     <string name="cancel">Cancel</string>
     <string name="create_admin">Create New Admin</string>
+    <string name="search">Search</string>
+    <string name="search_eyewear">Search Eye Wear</string>
+    <string name="clear">Clear</string>
 
 
 </resources>

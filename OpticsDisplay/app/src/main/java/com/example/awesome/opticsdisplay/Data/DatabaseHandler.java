@@ -334,4 +334,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return stringBuffer.toString();
     }
 
+    public String locationOfItem2(String modelNumber) {
+        StringBuffer stringBuffer = new StringBuffer();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = Constants.KEY_MODEL_NUMBER + " =?";
+        String[] selectionArgs = {modelNumber};
+        Cursor cursor = db.query(Constants.TABLE_NAME, Constants.QUERY_STRING_ARRAY, selection, selectionArgs, null, null, null);
+
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(1);
+            String desc = cursor.getString(2);
+            String loc = cursor.getString(4);
+            String s_loc = cursor.getString(5);
+
+            stringBuffer.append("Name:\t" + name + "\nDesc:\t" + desc + "\nMod:\t" + modelNumber
+                                + "\nLoc:\t" + loc + "\nShelf:\t" + s_loc);
+        }
+
+
+        return stringBuffer.toString();
+    }
+
 }//--- END OF DATABASEHANDLER ---//
