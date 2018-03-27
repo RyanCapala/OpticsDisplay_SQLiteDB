@@ -24,6 +24,13 @@ public class Constants {
     public static final String SOLD_STR = "** SOLD **";
     public static final String NOT_APPLICABLE = "N/A";
 
+    public static final String ADMIN_NAME_KEY = "adminNameKey";
+    public static final String ADMIN_PASS_KEY = "adminPassKey";
+    public static final String SUCCESS_MSG = "Registration Succesful!";
+    public static final String PIN_MATCH_ERR = "Pin doesn't match";
+    public static final String USER_EXIST_ERR = "User already exist";
+    public static final String EMPTY_FIELDS_ERR = "Fields Empty";
+
 
     //String Array
     public static final String[] QUERY_STRING_ARRAY =
@@ -33,8 +40,8 @@ public class Constants {
                     KEY_DESCRIPTION,
                     KEY_MODEL_NUMBER,
                     KEY_LOCATION,
-                    KEY_OLD_LOCATION,
                     KEY_SHELF_LOCTION,
+                    KEY_OLD_LOCATION,
                     KEY_DATE_ADDED
             };
 

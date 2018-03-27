@@ -14,13 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CreateAdminActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".Activities.CreateAdminActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Activities.StartpageActivity" />
         <activity
             android:name=".Activities.MainActivity"
@@ -32,15 +29,22 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.PinActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Activities.LoginActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".Activities.RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".Activities.DeleteUserActivity" />
+        <activity android:name=".Activities.DeleteUserActivity" />
+        <activity android:name=".Activities.ResetAdminPinActivity" />
+        <activity android:name=".Activities.InitialStartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

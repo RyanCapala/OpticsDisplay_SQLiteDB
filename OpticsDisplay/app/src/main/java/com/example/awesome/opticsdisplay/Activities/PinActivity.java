@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.awesome.opticsdisplay.Data.DBHandlerAdmin;
 import com.example.awesome.opticsdisplay.Model.Admin;
 import com.example.awesome.opticsdisplay.R;
+import com.example.awesome.opticsdisplay.Util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,15 @@ public class PinActivity extends AppCompatActivity {
     EditText pinCode, adminName;
     Button registerUserBtn;
     Button deleteUserBtn;
+    Button resetAdminPinBtn;
+    Button createAdminBtn;
     TextView cancelAdmin;
 
     private String adminPin, admin_name;
     private DBHandlerAdmin dbHandlerAdmin;
     private List<String> passList;
     private List<String> adminList;
+    private String _uname, _pin;
 
 
     @Override
@@ -39,6 +43,8 @@ public class PinActivity extends AppCompatActivity {
         pinCode = (EditText) findViewById(R.id.pinCodeEditText);
         registerUserBtn = (Button) findViewById(R.id.pinLoginBtn);
         deleteUserBtn = (Button) findViewById(R.id.pinDltUserBtn);
+        resetAdminPinBtn = (Button) findViewById(R.id.resetAdminPinBtn);
+        createAdminBtn = (Button) findViewById(R.id.createAdminBtn);
         cancelAdmin = (TextView) findViewById(R.id.cancelAdminTV);
 
         dbHandlerAdmin = new DBHandlerAdmin(this);
@@ -46,14 +52,61 @@ public class PinActivity extends AppCompatActivity {
         registerUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifyPin(RegisterActivity.class);
+                getEditTextValues();
+                if (_uname.isEmpty() || _pin.isEmpty()) {
+                    Toast.makeText(PinActivity.this, Constants.EMPTY_FIELDS_ERR, Toast.LENGTH_LONG).show();
+                } else {
+                    verifyPin(RegisterActivity.class);
+                }
+
             }
         });
 
         deleteUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verifyPin(DeleteUserActivity.class);
+                getEditTextValues();
+                if (_uname.isEmpty() || _pin.isEmpty()) {
+                    Toast.makeText(PinActivity.this, Constants.EMPTY_FIELDS_ERR, Toast.LENGTH_LONG).show();
+                } else {
+                    verifyPin(DeleteUserActivity.class);
+                }
+
+            }
+        });
+
+        resetAdminPinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getEditTextValues();
+                if (_uname.isEmpty() || _pin.isEmpty()) {
+                    Toast.makeText(PinActivity.this, Constants.EMPTY_FIELDS_ERR, Toast.LENGTH_LONG).show();
+                } else {
+                    verifyPin(ResetAdminPinActivity.class);
+                }
+
+            }
+        });
+
+        createAdminBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int count = dbHandlerAdmin.getAdminCount();
+                getEditTextValues();
+                if (_uname.isEmpty() || _pin.isEmpty()) {
+                    Toast.makeText(PinActivity.this, Constants.EMPTY_FIELDS_ERR, Toast.LENGTH_LONG).show();
+                } else {
+                    if (count <= 2) {
+                        verifyPin(CreateAdminActivity.class);
+                    } else {
+                        Toast.makeText(PinActivity.this,
+                                "Unable to create Admin. (" + count
+                                + " " + "Admin limit)", Toast.LENGTH_LONG).show();
+
+                        pinCode.setText(null);
+                        adminName.setText(null);
+                    }
+                }
             }
         });
 
@@ -65,25 +118,30 @@ public class PinActivity extends AppCompatActivity {
         });
 
 
-    }
+    }//end of onCreate
 
-    private void verifyPin(Class activityClass){
-        String pin = pinCode.getText().toString().trim();
-        String name = adminName.getText().toString().trim();
-        if (checkAdminPin(pin, name)) {
-            if (pin.equals(adminPin)) {
-
-                goToActivity(activityClass);
-
+    private void verifyPin(Class activityClass) {
+        if (checkAdminPin(_pin, _uname)) {
+            if (_pin.equals(adminPin)) {
+                goToActivityWithName(activityClass, _uname, _pin);
+                pinCode.setText(null);
+                adminName.setText(null);
+            } else {
+                Toast.makeText(this, getString(R.string.error_admin_pin), Toast.LENGTH_LONG).show();
+                pinCode.setText(null);
             }
         } else {
-            Toast.makeText(this, getText(R.string.error_admin_pin), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.error_admin_pin), Toast.LENGTH_LONG).show();
+            pinCode.setText(null);
         }
-
-        //Clear Edit text
-        pinCode.setText(null);
-        adminName.setText("");
     }
+
+
+    private void getEditTextValues() {
+        _uname = adminName.getText().toString().trim();
+        _pin = pinCode.getText().toString().trim();
+    }
+
 
     private List<String> getAdminPinFromDB() {
         List<Admin> adminList = new ArrayList<>();
@@ -125,6 +183,13 @@ public class PinActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void goToActivityWithName(Class activityClass, String admin, String pass) {
+        Intent intent = new Intent(PinActivity.this, activityClass);
+        intent.putExtra(Constants.ADMIN_NAME_KEY, admin);
+        startActivity(intent);
+        finish();
     }
 
     private void goToActivity(Class activityClass) {

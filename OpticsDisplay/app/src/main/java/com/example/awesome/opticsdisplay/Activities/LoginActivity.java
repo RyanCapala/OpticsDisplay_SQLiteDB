@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import com.example.awesome.opticsdisplay.Data.DatabaseHelperUser;
 import com.example.awesome.opticsdisplay.Helper.InputValidation;
 import com.example.awesome.opticsdisplay.R;
+import com.example.awesome.opticsdisplay.Util.Constants;
 import com.example.awesome.opticsdisplay.Util.Session;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -115,6 +116,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 clearInputEditText();
             }
 
+        } else {
+            Snackbar.make(scrollView, Constants.EMPTY_FIELDS_ERR, Snackbar.LENGTH_LONG).show();
         }
 
     }

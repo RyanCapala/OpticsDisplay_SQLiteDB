@@ -210,8 +210,25 @@ public class MainActivity extends AppCompatActivity {
                 if (!item_name.getText().toString().isEmpty() &&
                         !item_description.getText().toString().isEmpty() &&
                         !item_model.getText().toString().isEmpty()){
+                    String modNum = item_model.getText().toString().trim();
 
-                    saveDisplayToDB(v);
+                    if (!db.checkModelNumber(modNum)) {
+                        saveDisplayToDB(v);
+                    } else {
+                        String itemLocation = db.locationOfItem(modNum);
+                        String output = itemLocation + "\nAlready Exist!!";
+                        //This will allow the Snackbar to stay open until
+                        //the 'x' button is clicked.
+                        Snackbar.make(v, output, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        }).show();
+
+                    }
+
 
                 }
 

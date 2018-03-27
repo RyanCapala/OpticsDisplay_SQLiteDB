@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/admin_name"
         android:inputType="text"
@@ -73,6 +73,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pinLoginBtn" />
 
+    <Button
+    android:id="@+id/resetAdminPinBtn"
+    android:layout_width="150dp"
+    android:background="@color/colorTransBlack"
+    android:textColor="@android:color/holo_red_dark"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:text="@string/reset_admin_pin"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/pinDltUserBtn" />
+
+    <Button
+        android:id="@+id/createAdminBtn"
+        android:layout_width="150dp"
+        android:background="@color/colorTransBlack"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/create_admin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resetAdminPinBtn" />
+    
+
     <TextView
         android:id="@+id/cancelAdminTV"
         android:layout_width="wrap_content"
@@ -86,6 +115,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pinDltUserBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/createAdminBtn" />
 
 </android.support.constraint.ConstraintLayout>

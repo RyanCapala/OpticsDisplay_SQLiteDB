@@ -18,6 +18,7 @@ import com.example.awesome.opticsdisplay.Data.DatabaseHelperUser;
 import com.example.awesome.opticsdisplay.Helper.InputValidation;
 import com.example.awesome.opticsdisplay.Model.User;
 import com.example.awesome.opticsdisplay.R;
+import com.example.awesome.opticsdisplay.Util.Constants;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = "RegisterActivity";
@@ -138,6 +139,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
 
 
+        } else {
+            Snackbar.make(scrollView, Constants.EMPTY_FIELDS_ERR, Snackbar.LENGTH_LONG).show();
         }
 
         hideKeyboard();

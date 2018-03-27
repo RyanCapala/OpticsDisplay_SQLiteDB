@@ -13,6 +13,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.awesome.opticsdisplay.Data.DBHandlerAdmin;
 import com.example.awesome.opticsdisplay.Data.DatabaseHelperUser;
 import com.example.awesome.opticsdisplay.R;
 
@@ -31,17 +32,15 @@ public class DeleteUserActivity extends AppCompatActivity {
     Button doneBtn;
     List<String> userArray;
     DatabaseHelperUser databaseHelperUser;
+    DBHandlerAdmin dbHandlerAdmin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_user);
         getSupportActionBar().hide();
 
-        databaseHelperUser = new DatabaseHelperUser(this);
-        userArray = new ArrayList<>();
-        userArray = databaseHelperUser.getAllUserNames();
-        userListView = (ListView) findViewById(R.id.userListView);
-        doneBtn = (Button) findViewById(R.id.doneBtn_del_act);
+        initDeclaredObjects();
+
 
         ListAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, userArray);
         userListView.setAdapter(listAdapter);
@@ -62,6 +61,15 @@ public class DeleteUserActivity extends AppCompatActivity {
                 showDeleteDialog(user, position);
             }
         });
+    }
+
+    private void initDeclaredObjects() {
+        databaseHelperUser = new DatabaseHelperUser(this);
+        dbHandlerAdmin = new DBHandlerAdmin(this);
+        userArray = new ArrayList<>();
+        userArray = databaseHelperUser.getAllUserNames();
+        userListView = (ListView) findViewById(R.id.userListView);
+        doneBtn = (Button) findViewById(R.id.doneBtn_del_act);
     }
 
     private void showDeleteDialog(final String user, final int pos) {
@@ -89,10 +97,16 @@ public class DeleteUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Delete user
-                Toast.makeText(DeleteUserActivity.this, R.string.user_deleted +": " + user, Toast
+                Toast.makeText(DeleteUserActivity.this, getString(R.string.user_deleted) +": " + user, Toast
                         .LENGTH_SHORT)
                         .show();
                 databaseHelperUser.deleteUser(user);
+
+                //check if deleted user is an Admin
+                //then delete it from admin DB if it is
+                if (dbHandlerAdmin.checkAdmin(user)) {
+                    dbHandlerAdmin.deleteAdmin(user);
+                }
                 userArray.remove(pos);
                 dialog.dismiss();
 

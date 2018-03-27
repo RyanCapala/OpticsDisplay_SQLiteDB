@@ -1,6 +1,5 @@
 package com.example.awesome.opticsdisplay.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +7,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ScrollView;
 
 import com.example.awesome.opticsdisplay.Data.DBHandlerAdmin;
@@ -19,10 +17,9 @@ import com.example.awesome.opticsdisplay.Model.Admin;
 import com.example.awesome.opticsdisplay.Model.User;
 import com.example.awesome.opticsdisplay.R;
 
-public class CreateAdminActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String TAG = "CreateAdminActivity";
+public class InitialStartActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final AppCompatActivity activity = CreateAdminActivity.this;
+    private final AppCompatActivity activity = InitialStartActivity.this;
 
     private ScrollView scrollView;
 
@@ -39,33 +36,35 @@ public class CreateAdminActivity extends AppCompatActivity implements View.OnCli
     private User user;
     private StoreToDBHelper storeToDBHelper;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_initial_start);
         setContentView(R.layout.activity_create_admin);
-        getSupportActionBar().hide();
-
 
         initViews();
         initListeners();
         initObjects();
+        bypassActivity();
+
+    }//end onCreate
 
 
-
-    }//End of onCreate
-
-
+    //--------------------------------------------------------------------------------------------//
+    // for 'Implements View.OnClickListener'
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.appCompatBtnRegister_create_admin:
                 storeDataToDB();
                 break;
         }
     }
 
+    private void initListeners() {
+        appCompatButtonCreate.setOnClickListener(this);
+    }
+    //--------------------------------------------------------------------------------------------//
 
     private void initViews() {
         scrollView = (ScrollView) findViewById(R.id.ScrollViewID_create_admin);
@@ -75,9 +74,7 @@ public class CreateAdminActivity extends AppCompatActivity implements View.OnCli
         appCompatButtonCreate = (AppCompatButton) findViewById(R.id.appCompatBtnRegister_create_admin);
     }
 
-    private void initListeners() {
-        appCompatButtonCreate.setOnClickListener(this);
-    }
+
 
     private void initObjects() {
         dbHandlerAdmin = new DBHandlerAdmin(activity);
@@ -86,7 +83,6 @@ public class CreateAdminActivity extends AppCompatActivity implements View.OnCli
         admin = new Admin();
         user = new User();
         storeToDBHelper = new StoreToDBHelper(admin, user, activity);
-
     }
 
     private void storeDataToDB() {
@@ -109,6 +105,7 @@ public class CreateAdminActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+
     private void clearInputEditText() {
         editTextUserName.setText(null);
         editTextPassword.setText(null);
@@ -121,14 +118,16 @@ public class CreateAdminActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void goToStartPage() {
-        Intent intent = new Intent(this, StartpageActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(activity, StartpageActivity.class));
         finish();
     }
 
-
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(scrollView.getWindowToken(), 0);
+    private void bypassActivity() {
+        if (dbHandlerAdmin.getAdminCount() > 0) {
+            startActivity(new Intent(activity, StartpageActivity.class));
+            finish();
+        }
     }
+
+
 }

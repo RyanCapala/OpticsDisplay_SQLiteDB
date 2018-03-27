@@ -7,18 +7,18 @@
 
     <string name="username_hint">Username</string>
     <string name="user_deleted">User Deleted</string>
-    <string name="password_hint">Password</string>
+    <string name="password_hint">Pin</string>
     <string name="login_btn">Login</string>
     <string name="register_tv_name">Register Here</string>
     <string name="register_btn">Register</string>
-    <string name="conf_password_hint">Confirm Password</string>
+    <string name="conf_password_hint">Confirm Pin</string>
     <string name="error_message_name">Enter Username</string>
-    <string name="error_message_password">Enter Password</string>
+    <string name="error_message_password">Enter Pin</string>
     <string name="success_message">Registration Successful</string>
     <string name="text_not_member">No account yet? Create one</string>
     <string name="text_already_member">Already a member? Login</string>
-    <string name="error_password_match">Password Does Not Match!</string>
-    <string name="error_valid_username_password">Wrong Username or Password</string>
+    <string name="error_password_match">Pin Does Not Match!</string>
+    <string name="error_valid_username_password">Wrong Username or Pin</string>
     <string name="error_user_exists">Username Already Exists</string>
     <string name="text_title">My Awesome App</string>
     <string name="title_register_page">Register User</string>
@@ -72,6 +72,7 @@
         <item>** SOLD **</item>
         <item>** MISSING **</item>
     </string-array>
+
     <string name="title_activity_login">Sign in</string>
     <string name="error_admin_pin">Pin Code Invalid!</string>
     <string name="add_user_btn">Register User</string>
@@ -80,6 +81,11 @@
     <string name="create_btn">Create</string>
     <string name="action_sign_out">Logout</string>
     <string name="admin_name">Admin Name</string>
+    <string name="reset_admin_pin">Reset Admin Pin</string>
+    <string name="title_reset_admin">Reset Admin</string>
+    <string name="reset_btn">Reset</string>
+    <string name="cancel">Cancel</string>
+    <string name="create_admin">Create New Admin</string>
 
 
 </resources>

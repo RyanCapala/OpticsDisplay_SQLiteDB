@@ -219,6 +219,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     //------------- end of getListItems -----------------//
 
+
     //------------- getItemsByLocation ----------------//
     // function to get an item by location, and return the items
     // in a string array
@@ -292,5 +293,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     //------------- end of getListByLocation ------------------//
 
+    //-------------- checkModelNumber -------------------//
+    public boolean checkModelNumber(String modelNumber) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] column = {Constants.KEY_ID};
+        String selection = Constants.KEY_MODEL_NUMBER + " =?";
+        String[] selectionArgs = {modelNumber};
+
+        Cursor cursor = db.query(Constants.TABLE_NAME, column, selection, selectionArgs, null, null, null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+
+        return false;
+
+    }
+    //--------------- end of checkModelNumber -----------//
+
+    public String locationOfItem(String modelNumber) {
+        StringBuffer stringBuffer = new StringBuffer();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = Constants.KEY_MODEL_NUMBER + " =?";
+        String[] selectionArgs = {modelNumber};
+        Cursor cursor = db.query(Constants.TABLE_NAME, Constants.QUERY_STRING_ARRAY, selection, selectionArgs, null, null, null);
+
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(1);
+            String loc = cursor.getString(4);
+            String s_loc = cursor.getString(5);
+
+            stringBuffer.append(name + "\t\t" + modelNumber + "\t\tLoc: " + loc + "\t\t" + "Shelf: " + s_loc);
+        }
+
+
+        return stringBuffer.toString();
+    }
 
 }//--- END OF DATABASEHANDLER ---//
