@@ -27,18 +27,18 @@
                 android:paddingTop="5dp"
                 android:text="Name: "
                 android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/nameTitle"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="70dp"
                 android:paddingTop="5dp"
                 android:text="EW"
                 android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/descriptionTitle"
@@ -46,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/nameTitle"
                 android:text="Desc:"
+                android:textSize="18dp"
                 android:textColor="@android:color/black"
                 android:textStyle="italic" />
 
@@ -54,8 +55,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/descriptionTitle"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="70dp"
                 android:text="Mt Blk/Blk Prizm"
+                android:textSize="18dp"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -64,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/descriptionTitle"
                 android:text="Mod#"
+                android:textSize="18dp"
                 android:textColor="@android:color/black"
                 android:textStyle="italic" />
 
@@ -72,8 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/modelTitle"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="70dp"
                 android:text="OO1234-11"
+                android:textSize="18dp"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -81,8 +85,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/modelNumber"
-                android:layout_marginLeft="150dp"
+                android:layout_marginLeft="200dp"
                 android:text="Loc:"
+                android:textSize="18dp"
                 android:textColor="@android:color/black"
                 android:textStyle="italic" />
 
@@ -92,7 +97,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/locationTitle"
-                android:layout_marginLeft="190dp"
+                android:layout_marginLeft="250dp"
+                android:textSize="18dp"
                 android:text="LDW1"
                 android:textColor="@android:color/black" />
 
@@ -102,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/locationTitle"
                 android:text="Date: "
+                android:textSize="18dp"
                 android:textColor="@android:color/black"
                 android:textStyle="italic" />
 
@@ -110,20 +117,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/dateTitle"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="70dp"
                 android:text="Jan 1, 2018"
+                android:textSize="18dp"
                 android:textColor="@android:color/black"
                 android:textStyle="italic" />
 
             <TextView
-            android:id="@+id/shelfLocationTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/date"
-            android:layout_marginLeft="150dp"
-            android:text="Shelf: "
-            android:textColor="@android:color/black"
-            android:textStyle="italic" />
+                android:id="@+id/shelfLocationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/date"
+                android:layout_marginLeft="200dp"
+                android:text="Shelf: "
+                android:textColor="@android:color/black"
+                android:textSize="18dp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/shelfLocationTV"
@@ -131,8 +140,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/shelfLocationTitle"
-                android:layout_marginLeft="190dp"
+                android:layout_marginLeft="250dp"
                 android:text="S1"
+                android:textSize="18dp"
                 android:textColor="@android:color/black" />
 
             <TextView
@@ -140,8 +150,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/date"
-                android:layout_marginLeft="220dp"
+                android:layout_marginLeft="290dp"
                 android:text="OL: "
+                android:textSize="18dp"
                 android:textColor="@android:color/black"
                 android:textStyle="italic" />
 
@@ -150,28 +161,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/shelfLocationTitle"
-                android:layout_marginLeft="245dp"
-                android:text=""
+                android:layout_marginLeft="320dp"
+                android:text="N/A"
+                android:textSize="18dp"
                 android:textColor="@color/colorLightGray" />
 
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/name"
                 android:layout_alignParentRight="true"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/editButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="30dp"
                     android:background="@android:drawable/ic_menu_edit" />
 
                 <Button
                     android:id="@+id/deleteButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginRight="10dp"
                     android:background="@android:drawable/ic_delete" />
 

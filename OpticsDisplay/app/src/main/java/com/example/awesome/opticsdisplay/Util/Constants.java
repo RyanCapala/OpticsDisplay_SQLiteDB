@@ -30,6 +30,16 @@ public class Constants {
     public static final String PIN_MATCH_ERR = "Pin doesn't match";
     public static final String USER_EXIST_ERR = "User already exist";
     public static final String EMPTY_FIELDS_ERR = "Fields Empty";
+    public static final String NO_MATCH = "No Match!\nCheck the 'Model#' you entered.";
+    public static final String SHELF1 = "S1";
+    public static final String SHELF2 = "S2";
+    public static final String SHELF3 = "S3";
+    public static final String SHELF4 = "S4";
+    public static final String SHELF5 = "S5";
+
+    public static final String LIFESTYLE = "LIFESTYLE WALL";
+    public static final String CUSTOM = "CUSTOM WALL";
+    public static final String SALE = "SALE WALL";
 
 
     //String Array

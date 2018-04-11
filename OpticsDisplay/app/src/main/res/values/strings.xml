@@ -48,6 +48,14 @@
         <item>BR4</item>
     </string-array>
 
+    <string-array name="shelf_name">
+        <item>**</item>
+        <item>TL</item>
+        <item>TR</item>
+        <item>BL</item>
+        <item>BR</item>
+    </string-array>
+
 
     <string-array name="location_array">
         <item>RDW1</item>
@@ -89,6 +97,7 @@
     <string name="search">Search</string>
     <string name="search_eyewear">Search Eye Wear</string>
     <string name="clear">Clear</string>
+    <string name="enter_model_number">Enter Model# i.e. OO1234-12</string>
 
 
 </resources>

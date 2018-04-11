@@ -293,6 +293,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     //------------- end of getListByLocation ------------------//
 
+    //--------------getCountStr----------//
+    public String getCountStr(String loc) {
+        List<Display> displayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = Constants.KEY_LOCATION + " LIKE ?";
+        String[] selection_args = {loc};
+
+        Cursor cursor = db.query(Constants.TABLE_NAME, Constants.QUERY_STRING_ARRAY,
+                selection, selection_args, null, null, Constants.KEY_NAME + " ASC");
+
+        String count = String.valueOf(cursor.getCount());
+        return count;
+    }
+
     //-------------- checkModelNumber -------------------//
     public boolean checkModelNumber(String modelNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -324,10 +338,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         while (cursor.moveToNext()) {
             String name = cursor.getString(1);
+            String desc = cursor.getString(2);
             String loc = cursor.getString(4);
             String s_loc = cursor.getString(5);
 
-            stringBuffer.append(name + "\t\t" + modelNumber + "\t\tLoc: " + loc + "\t\t" + "Shelf: " + s_loc);
+            stringBuffer.append(name + "\t\t" + modelNumber
+                                + "\nDesc\t:\t" + desc
+                                + "\nLoc\t\t:\t" + loc
+                                + "\nShelf\t:\t" + s_loc);
         }
 
 
@@ -348,8 +366,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             String loc = cursor.getString(4);
             String s_loc = cursor.getString(5);
 
-            stringBuffer.append("Name:\t" + name + "\nDesc:\t" + desc + "\nMod:\t" + modelNumber
-                                + "\nLoc:\t" + loc + "\nShelf:\t" + s_loc);
+            stringBuffer.append("Name\t:\t" + name
+                                + "\nDesc\t:\t" + desc
+                                + "\nMod\t\t:\t" + modelNumber
+                                + "\nLoc\t\t\t:\t" + loc
+                                + "\nShelf\t:\t" + s_loc);
         }
 
 

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +21,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.awesome.opticsdisplay.Data.DatabaseHandler;
 import com.example.awesome.opticsdisplay.Model.Display;
@@ -172,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.search_menu_main:
-                Toast.makeText(this, "Search", Toast.LENGTH_LONG).show();
                 createPopupDialog2();
         }
 
@@ -209,8 +208,17 @@ public class MainActivity extends AppCompatActivity {
                 String modelNumber = item_model2.getText().toString().trim();
                 if (!modelNumber.isEmpty()) {
                     String foundItem = db2.locationOfItem2(modelNumber);
-                    searchResultTV.setText(foundItem);
+                    if (!foundItem.isEmpty()) {
+                        searchResultTV.setText(foundItem);
+                    } else {
+                        searchResultTV.setText(Constants.NO_MATCH);
+                    }
+
+                    hideKeyboard(v);
+                } else {
+                    item_model2.setError("Enter Model#");
                 }
+
             }
         });
 
@@ -278,20 +286,29 @@ public class MainActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!item_name.getText().toString().isEmpty() &&
-                        !item_description.getText().toString().isEmpty() &&
-                        !item_model.getText().toString().isEmpty()){
-                    String modNum = item_model.getText().toString().trim();
+                String name = item_name.getText().toString().trim();
+                String desc = item_description.getText().toString().trim();
+                String modNum = item_model.getText().toString().trim();
+                if (!name.isEmpty() && !desc.isEmpty() && !modNum.isEmpty()){
 
                     if (!db.checkModelNumber(modNum)) {
                         saveDisplayToDB(v);
+                        hideKeyboard(v);
                     } else {
                         String itemLocation = db.locationOfItem(modNum);
-                        String output = itemLocation + "\nAlready Exist!!";
+                        String output = "Item already exist!\n" + itemLocation;
                         //This will allow the Snackbar to stay open until
                         //the 'x' button is clicked.
-                        Snackbar.make(v, output, Snackbar.LENGTH_INDEFINITE).setAction("x", new View.OnClickListener() {
 
+
+                        Snackbar snackbar = Snackbar.make(v, output, Snackbar.LENGTH_INDEFINITE);
+
+                        // to show multiple lines when snackbar shows up
+                        View snackbarView = snackbar.getView();
+                        TextView textView = (TextView) snackbarView.findViewById(android.support
+                                .design.R.id.snackbar_text);
+                        textView.setMaxLines(5);
+                        snackbar.setAction("X", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -300,7 +317,16 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
-
+                } else if (name.isEmpty() && desc.isEmpty() && modNum.isEmpty()) {
+                    item_name.setError("Enter Eyewear Name");
+                    item_description.setError("Enter Description");
+                    item_model.setError("Enter Model#");
+                } else if (name.isEmpty()) {
+                    item_name.setError("Enter Eyewear Name");
+                } else if (desc.isEmpty()) {
+                    item_description.setError("Enter Description");
+                }else if (modNum.isEmpty()) {
+                    item_model.setError("Enter Model#");
                 }
 
             }
@@ -387,6 +413,11 @@ public class MainActivity extends AppCompatActivity {
         session.setUserLoggedIn(false);
         startActivity(new Intent(ACTIVITY, LoginActivity.class));
         finish();
+    }
+
+    private void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 

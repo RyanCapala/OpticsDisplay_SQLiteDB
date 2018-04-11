@@ -7,4 +7,5 @@
     <color name="colorPurple">#9340ff</color>
     <color name="colorTransBlack">#7b000000</color>
     <color name="colorLightGray">#636262</color>
+    <color name="colorLighterGray">#9c9c9c</color>
 </resources>

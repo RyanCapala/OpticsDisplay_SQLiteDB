@@ -40,9 +40,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     
     public static final String PREF_NAME = "PrefCount";
     public static final String PREF_KEY = "count";
+    public static final String PREF_KEY1 = "s1_count";
+    public static final String PREF_KEY2 = "s2_count";
+    public static final String PREF_KEY3 = "s3_count";
+    public static final String PREF_KEY4 = "s4_count";
+    public static final String PREF_KEY5 = "s5_count";
 
     
     private UpdateLocationCountInterface updateLocationCountInterface;
+    private UpdateLocationCountInterface updateShelfCountInterface;
     //-------------------------
 
 
@@ -54,10 +60,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //This constructor is used when you are trying to pass some data from the
     //adapter to the location activity
     public RecyclerViewAdapter(Context context, List<Display> displayItems,
-                               UpdateLocationCountInterface updateLocationCountInterface) {
+                               UpdateLocationCountInterface updateLocationCountInterface,
+                               UpdateLocationCountInterface updateShelfCountInterface) {
         this.context = context;
         this.displayItems = displayItems;
         this.updateLocationCountInterface = updateLocationCountInterface;
+        this.updateShelfCountInterface = updateShelfCountInterface;
     }
     
     @Override
@@ -143,6 +151,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //--------- deleteItem --------------//
         private void deleteItem(final Display display) {
+
+            final String sloc = display.getShelfLocation();
+            final String scount = getShelfCountFromSharedPref(findShelfNameKey(sloc));
+            final String sname_key = findShelfNameKey(sloc);
+            
             //Create alert dialog
             alertDialogBuilder = new AlertDialog.Builder(context);
             inflater = LayoutInflater.from(context);
@@ -169,13 +182,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     DatabaseHandler db = new DatabaseHandler(context);
                     db.deleteDisplay(display);
                     displayItems.remove(getAdapterPosition());
+                    List<Display> dl = new ArrayList<>();
                     notifyItemRemoved(getAdapterPosition());
-                    
 
                     //to set location count in LocationActivity
-                    String loc_count = String.valueOf(displayItems.size());
+                    //String loc_count = String.valueOf(displayItems.size());
+                    String loc_count = db.getCountStr(display.getLocation());
+
+//                    Log.d(TAG, "onClick: ====>> locationCount " + loc_count);
+
+                    int _scount = Integer.valueOf(scount);
+                    String resVal;
+                    if (_scount != 0) {
+                        _scount -= 1;
+                        resVal = String.valueOf(_scount);
+                    } else {
+                        resVal = "0";
+                    }
+
+//                    Log.d(TAG, "onClick: resval " + resVal);
+
                     updateCountToSharedPref(loc_count);
+                    updateCountToShelfSharedPref(resVal, sname_key);
                     updateLocationCountInterface.updateLocationCount(loc_count);
+                    updateShelfCountInterface.updateShelfCount(resVal);
                     dialog.dismiss();
                     
 
@@ -187,12 +217,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //----------- editItem ---------------//
         private void editItem(final Display display) {
+
             //==== for spinner
             final String[] loc_array = context.getResources().getStringArray(R.array.location_array);
             final String[] shelf_loc_array = context.getResources().getStringArray(R
                     .array.shelf_location);
             
-            final String str = display.getLocation();
+            final String _location = display.getLocation();
+            final String _shelf = display.getShelfLocation();
 
             alertDialogBuilder = new AlertDialog.Builder(context);
             inflater = LayoutInflater.from(context);
@@ -259,6 +291,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             dialog = alertDialogBuilder.create();
             dialog.show();
 
+            final String sloc = display.getShelfLocation();
+            final String scount = getShelfCountFromSharedPref(findShelfNameKey(sloc));
+            final String sname_key = findShelfNameKey(sloc);
+
+//            Log.d(TAG, "editItem: sloc = " + sloc);
+//            Log.d(TAG, "editItem: scount = " + scount);
+//            Log.d(TAG, "editItem: sname_key = " + sname_key);
+
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -269,6 +309,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     display.setModel(itemModel.getText().toString());
                     display.setLocation(loc_item);
                     display.setShelfLocation(shelf_loc_item);
+
+                    //to set the old location
                     if (loc_item.equals(Constants.MISSING_STR) || loc_item.equals(Constants
                             .SOLD_STR)) {
                         display.setOldLocation(currLoc);
@@ -280,13 +322,64 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     if (!itemName.getText().toString().isEmpty() &&
                             !itemDescription.getText().toString().isEmpty() &&
                             !itemModel.getText().toString().isEmpty()) {
+
                         db.updateDisplay(display);
-                        if (!str.equals(display.getLocation())) {
+
+                        if (!_location.equals(display.getLocation())) {
                             displayItems.remove(getAdapterPosition());
                             notifyItemRemoved(getAdapterPosition());
-                            String loc_count = String.valueOf(displayItems.size());
+                            //String loc_count = String.valueOf(db.getCountStr());
+                            String loc_count = db.getCountStr(currLoc);
+
+//                            Log.d(TAG, "onClick: <<+++>>> Count = " + db.getCountStr(currLoc));
+
                             updateCountToSharedPref(loc_count);
                             updateLocationCountInterface.updateLocationCount(loc_count);
+
+                            int _scount = 0;
+
+                            if (!scount.isEmpty()) {
+                                _scount = Integer.valueOf(scount);
+                            }
+
+                            String resultValue;
+                            if (_scount != 0) {
+                                _scount -= 1;
+                                resultValue = String.valueOf(_scount);
+                            } else {
+                                resultValue = "0";
+                            }
+
+//                            Log.d(TAG, "onClick: <<+++>>> resultValue = " + resultValue);
+
+                            updateCountToShelfSharedPref(resultValue, sname_key);
+                            updateShelfCountInterface.updateShelfCount(resultValue);
+                        } else if (!_shelf.equals(display.getShelfLocation()) && _location.equals
+                                (display.getLocation())) {
+                            displayItems.remove(getAdapterPosition());
+                            notifyItemRemoved(getAdapterPosition());
+//                            String loc_count = String.valueOf(displayItems.size());
+//                            updateCountToSharedPref(loc_count);
+//                            updateLocationCountInterface.updateLocationCount(loc_count);
+
+                            int _scount = 0;
+                            if (!scount.isEmpty()) {
+                                _scount = Integer.valueOf(scount);
+                            }
+
+                            String resultValue;
+                            if (_scount != 0) {
+                                _scount -= 1;
+                                resultValue = String.valueOf(_scount);
+                            } else {
+                                resultValue = "0";
+                            }
+
+//                            Log.d(TAG, "onClick: elif <<+++>>> resultValue = " + resultValue);
+
+                            updateCountToShelfSharedPref(resultValue, sname_key);
+                            updateShelfCountInterface.updateShelfCount(resultValue);
+
                         }
                         notifyItemChanged(getAdapterPosition(), display);
                     } else {
@@ -333,20 +426,52 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     
     private void updateCountToSharedPref(String locCount) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME,
-                Context
-                .MODE_PRIVATE);
+                Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PREF_KEY, locCount);
         editor.apply();
         
     }
+
+    private void updateCountToShelfSharedPref(String shelfcount, String shelf_key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context
+                .MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(shelf_key, shelfcount);
+        editor.apply();
+    }
+
+    private String getShelfCountFromSharedPref(String pref_key) {
+        SharedPreferences sp = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return sp.getString(pref_key, "");
+    }
     
+    private String findShelfNameKey(String shelf) {
+
+        String returnValue = "";
+        if (shelf.contains("1")) {
+            returnValue = PREF_KEY1;
+        } else if (shelf.contains("2")) {
+            returnValue = PREF_KEY2;
+        } else if (shelf.contains("3")) {
+            returnValue = PREF_KEY3;
+        } else if (shelf.contains("4")) {
+            returnValue =  PREF_KEY4;
+        } else if (shelf.contains("5")) {
+            returnValue = PREF_KEY5;
+        }
+
+        return returnValue;
+    }
+
     //---------------------------------------------//
     //This is used to trigger the the setting of the updated count when you delete an item
     public interface UpdateLocationCountInterface {
         //The string being passed when this is invoke is just to check the data
         //You can also use the data to whatever you want
         void updateLocationCount(String str);
+
+        void updateShelfCount(String count);
     }
 
 
