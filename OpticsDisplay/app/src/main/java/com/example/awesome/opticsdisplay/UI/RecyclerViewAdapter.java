@@ -105,9 +105,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public Button editButton;
         public Button deleteButton;
         public int id;
-        String loc_item;
+        String spinnerLocation;
         String shelf_loc_item;
         String currLoc;
+        String oldLoc;
         
         //--------------------------------
         //Constructor
@@ -189,7 +190,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     //String loc_count = String.valueOf(displayItems.size());
                     String loc_count = db.getCountStr(display.getLocation());
 
-//                    Log.d(TAG, "onClick: ====>> locationCount " + loc_count);
 
                     int _scount = Integer.valueOf(scount);
                     String resVal;
@@ -199,8 +199,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     } else {
                         resVal = "0";
                     }
-
-//                    Log.d(TAG, "onClick: resval " + resVal);
 
                     updateCountToSharedPref(loc_count);
                     updateCountToShelfSharedPref(resVal, sname_key);
@@ -245,11 +243,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             // assign current location to oldLoc
             currLoc = display.getLocation();
+            oldLoc = display.getOldLocation();
 
             location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    loc_item = loc_array[position];
+                    spinnerLocation = loc_array[position];
                 }
 
                 @Override
@@ -295,10 +294,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             final String scount = getShelfCountFromSharedPref(findShelfNameKey(sloc));
             final String sname_key = findShelfNameKey(sloc);
 
-//            Log.d(TAG, "editItem: sloc = " + sloc);
-//            Log.d(TAG, "editItem: scount = " + scount);
-//            Log.d(TAG, "editItem: sname_key = " + sname_key);
-
             saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -307,15 +302,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     display.setName(itemName.getText().toString());
                     display.setDescription(itemDescription.getText().toString());
                     display.setModel(itemModel.getText().toString());
-                    display.setLocation(loc_item);
+                    display.setLocation(spinnerLocation);
                     display.setShelfLocation(shelf_loc_item);
 
                     //to set the old location
-                    if (loc_item.equals(Constants.MISSING_STR) || loc_item.equals(Constants
-                            .SOLD_STR)) {
+                    if (isSoldOrMissing(spinnerLocation) && !isSoldOrMissing(currLoc)) {
                         display.setOldLocation(currLoc);
-                    } else if (!loc_item.equals(Constants.MISSING_STR) || !loc_item.equals
-                            (Constants.SOLD_STR)) {
+                    } else if (isSoldOrMissing(spinnerLocation) && isSoldOrMissing(currLoc)) {
+                        display.setOldLocation(oldLoc);
+                    } else if (!isSoldOrMissing(spinnerLocation)) {
                         display.setOldLocation(Constants.NOT_APPLICABLE);
                     }
 
@@ -472,6 +467,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         void updateLocationCount(String str);
 
         void updateShelfCount(String count);
+    }
+
+    private boolean isSoldOrMissing(String str) {
+        if (str.equals(Constants.MISSING_STR) || str.equals(Constants.SOLD_STR)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

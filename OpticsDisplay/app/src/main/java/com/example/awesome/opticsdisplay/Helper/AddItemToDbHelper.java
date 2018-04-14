@@ -67,6 +67,8 @@ public class AddItemToDbHelper {
     private static final String PREF_KEY4 = "s4_count";
     private static final String PREF_KEY5 = "s5_count";
 
+    private Display display;
+
 
 
 
@@ -158,6 +160,7 @@ public class AddItemToDbHelper {
             }
         });
     }
+    
 
     private void saveDisplayItemToDB(View v, String ew_name, String ew_desc, String ew_modNum) {
         Display display = new Display();
@@ -178,16 +181,6 @@ public class AddItemToDbHelper {
         String updatedCount = String.valueOf(_locCount);
         Log.d(TAG, "saveDisplayItemToDB: ===>> newCount = " + updatedCount);
         updateLocationCountToSharedPref(updatedCount);
-
-        //update shelf count
-//        Log.d(TAG, "saveDisplayItemToDB: ===>> shelf location = " + shelf_location_item);
-//        String o_scount = getShelfCountFromSharedPref(findShelfNameKey(shelf_location_item));
-//        Log.d(TAG, "saveDisplayItemToDB: ===>> old shelf count = " + o_scount);
-//        int numCount = Integer.valueOf(o_scount);
-//        numCount++;
-//        String n_scount = String.valueOf(numCount);
-//        Log.d(TAG, "saveDisplayItemToDB: ===>> new shelf count = " + n_scount);
-//        updateCountToShelfSharedPref(n_scount, findShelfNameKey(shelf_location_item));
 
 
         Snackbar.make(v, "Item Saved!", Snackbar.LENGTH_LONG).show();
