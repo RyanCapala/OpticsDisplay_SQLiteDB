@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/popup_layout"
+    android:id="@+id/popup_layout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,7 +17,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/title_popup"
+                android:id="@+id/title_popup2"
                 android:layout_marginTop="10dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content" />
 
             <EditText
-                android:id="@+id/item_name_popup"
-                android:layout_below="@+id/title_popup"
+                android:id="@+id/item_name_popup2"
+                android:layout_below="@+id/title_popup2"
                 android:hint="Enter EW Name"
                 android:inputType="textCapWords"
                 android:layout_marginTop="8dp"
@@ -37,8 +37,8 @@
                 android:layout_height="wrap_content" />
 
             <EditText
-                android:id="@+id/item_description_popup"
-                android:layout_below="@+id/item_name_popup"
+                android:id="@+id/item_description_popup2"
+                android:layout_below="@+id/item_name_popup2"
                 android:hint="i.e. Mt. Blk./Blk. Prizm"
                 android:layout_marginTop="8dp"
                 android:inputType="textCapWords"
@@ -46,55 +46,52 @@
                 android:layout_height="wrap_content" />
 
             <EditText
-                android:id="@+id/item_model_popup"
-                android:layout_below="@+id/item_description_popup"
+                android:id="@+id/item_model_popup2"
+                android:layout_below="@+id/item_description_popup2"
                 android:hint="Enter Model#"
                 android:layout_marginTop="8dp"
                 android:inputType="textCapCharacters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout2"
                 android:layout_marginTop="8dp"
-                android:layout_below="@+id/item_model_popup"
+                android:layout_below="@+id/item_model_popup2"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Spinner
-                    android:id="@+id/location_spinner_popup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".7"
-                    android:textAlignment="center"
-                    android:entries="@array/location_array"
-                    android:layout_below="@+id/item_model_popup"
-                    />
 
                 <Spinner
-                    android:id="@+id/shelf_location_spinner_popup"
-                    android:entries="@array/shelf_location"
-                    android:layout_weight=".3"
-                    android:layout_marginLeft="4dp"
-                    android:textAlignment="center"
+                    android:id="@+id/shelf_location_spinner_popup2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/location_spinner_popup"
-                    />
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="0dp"
 
-            </LinearLayout>
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!--android:entries="@array/shelf_location"-->
+
+            </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:id="@+id/linearLayout2"
-                android:layout_below="@+id/linearLayout"
+                android:id="@+id/linearLayout3"
+                android:layout_below="@+id/linearLayout2"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/save_button_popup"
+                    android:id="@+id/save_button_popup2"
                     android:text="Save"
                     android:layout_weight=".5"
                     android:layout_marginRight="5dp"
@@ -105,7 +102,7 @@
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/cancel_button_popup"
+                    android:id="@+id/cancel_button_popup2"
                     android:text="Cancel"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"

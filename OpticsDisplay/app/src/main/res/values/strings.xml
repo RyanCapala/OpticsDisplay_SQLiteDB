@@ -48,6 +48,33 @@
         <item>BR4</item>
     </string-array>
 
+    <string-array name="s1tos5_shelf_location">
+        <item>S1</item>
+        <item>S2</item>
+        <item>S3</item>
+        <item>S4</item>
+        <item>S5</item>
+    </string-array>
+
+    <string-array name="shelf_location_lcs">
+        <item>TL1</item>
+        <item>TL2</item>
+        <item>TL3</item>
+        <item>TL4</item>
+        <item>TR1</item>
+        <item>TR2</item>
+        <item>TR3</item>
+        <item>TR4</item>
+        <item>BL1</item>
+        <item>BL2</item>
+        <item>BL3</item>
+        <item>BL4</item>
+        <item>BR1</item>
+        <item>BR2</item>
+        <item>BR3</item>
+        <item>BR4</item>
+    </string-array>
+
     <string-array name="shelf_name">
         <item>**</item>
         <item>TL</item>

@@ -65,8 +65,11 @@ public class MainActivity extends AppCompatActivity {
     //public static final String UNAME_KEY = "userName";
     public static final String PREF_NAME = "Preferences";
     public static final String PREF_KEY = "text";
+    private static final String PREF_KEY_LNAME = "CurrentLoc";
+    private static final String PREF_KEY_LOC = "current";
     
     private Session session;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         usernameTV = (TextView) findViewById(R.id.userLoggedInTV);
         String str = "User:\t\t" + firstLetterToUpper(_uname);
         usernameTV.setText(str);
-        
 
         db = new DatabaseHandler(this);
         db2 = new DatabaseHandler(this);
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+                storeCurrentLocationToSF(location_array[position]);
                 intent.putExtra(INTENT_KEY, location_array[position]);
                 startActivity(intent);
             }
@@ -418,6 +421,13 @@ public class MainActivity extends AppCompatActivity {
     private void hideKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private void storeCurrentLocationToSF(String curr) {
+        SharedPreferences sp = getSharedPreferences(PREF_KEY_LNAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PREF_KEY_LOC, curr);
+        editor.apply();
     }
 
 
